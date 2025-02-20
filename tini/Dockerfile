@@ -28,6 +28,6 @@ COPY --from=build /app/api .
 
 EXPOSE 8080
 
-# ENTRYPOINT ["./tini", "--"]
-
 CMD ["/api"]
+
+# ENTRYPOINT ["./tini", "--"]
