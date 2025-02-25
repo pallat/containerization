@@ -18,16 +18,12 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo \
 # FROM gcr.io/distroless/static-debian11
 FROM alpine
 
-# USER nonroot
+RUN apk update && apk add tini
 
-# ENV TINI_VERSION v0.19.0
-# ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static ./tini
-# # RUN chmod +x ./tini
-
+WORKDIR /
 COPY --from=build /app/api .
 
 EXPOSE 8080
 
 CMD ["/api"]
-
-# ENTRYPOINT ["./tini", "--"]
+ENTRYPOINT [ "/sbin/tini", "--" ]
